@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { TreeviewItem } from 'ngx-treeview';
+import { TreeviewItem, TreeviewConfig } from 'ngx-treeview';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,36 @@ export class AppComponent {
   listchoicesItems: any;
   listchoicesValues = [];
   listchoices: any;
+
+  vowelItems: any;
+  vowelValues = [];
+  consonantItems: any;
+  consonantValues = [];
+  consonantDigraphItems: any;
+  consonantDigraphValues = [];
+  weldedSoundItems: any;
+  weldedSoundValues = [];
+  suffixItems: any;
+  suffixValues = [];
+
   filteredWords: any;
+
+  config = TreeviewConfig.create({
+    // hasCollapseExpand: true
+  });
+
+  vowelsList = ['a', 'e', 'i', 'o', 'u'];
+
+  consonantsList = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'];
+
+  consonantDigraphsList = ['wh', 'ch', 'sh', 'th', 'ck'];
+
+  weldedSoundsList = ['all', 'am', 'an', 'ang', 'ing', 'ong', 'ung', 'ank', 'ink', 'onk', 'unk'];
+
+  suffixesList = [
+    { suffix: 's', exclude: 'es' },
+    { suffix: 'es' }
+  ];
 
   data = JSON.parse(`{
     "steps": [
@@ -836,7 +865,7 @@ export class AppComponent {
                   "hull",
                   "whiff",
                   "jot",
-                  null,
+                  "null",
                   "muss",
                   "gull",
                   "pun",
@@ -1405,7 +1434,7 @@ export class AppComponent {
             let item = new TreeviewItem({
               text: listchoice.listchoice, value: listchoice.listchoice
             });
-  
+
             listchoices.push(item);
           }
         }
@@ -1427,7 +1456,7 @@ export class AppComponent {
     let stepsItem = new TreeviewItem({
       text: 'Steps', value: 'steps', children: steps
     });
-console.log(listchoices)
+
     let listchoicesItem = new TreeviewItem({
       text: 'List Choices', value: 'listchoices', children: listchoices
     });
@@ -1435,14 +1464,74 @@ console.log(listchoices)
     this.stepItems = [stepsItem];
     this.listchoicesItems = [listchoicesItem];
 
+    let vowels = [];
+    for (let vowel of this.vowelsList) {
+      let item = new TreeviewItem({
+        text: vowel, value: vowel, checked: false
+      });
+
+      vowels.push(item);
+    }
+    let vowelItem = new TreeviewItem({
+      text: 'Vowels', value: 'vowels', children: vowels
+    });
+    this.vowelItems = [vowelItem];
+
+    let consonants = [];
+    for (let consonant of this.consonantsList) {
+      let item = new TreeviewItem({
+        text: consonant, value: consonant, checked: false
+      });
+
+      consonants.push(item);
+    }
+    let consonantItem = new TreeviewItem({
+      text: 'Consonants', value: 'consonants', children: consonants
+    });
+    this.consonantItems = [consonantItem];
+
+    let consonantDigraphs = [];
+    for (let consonantDigraph of this.consonantDigraphsList) {
+      let item = new TreeviewItem({
+        text: consonantDigraph, value: consonantDigraph, checked: false
+      });
+
+      consonantDigraphs.push(item);
+    }
+    let consonantDigraphItem = new TreeviewItem({
+      text: 'Consonant Digraphs', value: 'consonantDigraphs', children: consonantDigraphs
+    });
+    this.consonantDigraphItems = [consonantDigraphItem];
+
+    let weldedSounds = [];
+    for (let weldedSound of this.weldedSoundsList) {
+      let item = new TreeviewItem({
+        text: weldedSound, value: weldedSound, checked: false
+      });
+
+      weldedSounds.push(item);
+    }
+    let weldedSoundItem = new TreeviewItem({
+      text: 'Welded Sounds', value: 'weldedSound', children: weldedSounds
+    });
+    this.weldedSoundItems = [weldedSoundItem];
+
+    let suffixes = [];
+    for (let suffix of this.suffixesList) {
+      let text = suffix.suffix + (suffix.exclude ? ' (excl -' + suffix.exclude + ')' : '');
+      let item = new TreeviewItem({
+        text: '-' + text, value: suffix, checked: false
+      });
+
+      suffixes.push(item);
+    }
+    let suffixItem = new TreeviewItem({
+      text: 'Suffixes', value: 'suffixes', children: suffixes
+    });
+    this.suffixItems = [suffixItem];
+
     this.filterWords();
   }
-
-  // onSelectedChange(values, newValues) {
-  //   values = newValues;
-
-  //   this.filterWords();
-  // }
 
   filterWords() {
     let filteredWords = [];
@@ -1454,7 +1543,59 @@ console.log(listchoices)
             if (this.listchoicesValues.indexOf(listchoice.listchoice) > -1) {
               for (let word of listchoice.words) {
                 if (filteredWords.indexOf(word) < 0) {
-                  filteredWords.push(word);
+                  let foundVowel = this.vowelValues.length == 0;
+                  if (!foundVowel) {
+                    for (let vowelValue of this.vowelValues) {
+                      if (word.includes(vowelValue)) {
+                        foundVowel = true;
+                        break;
+                      }
+                    }
+                  }
+
+                  let foundConsonant = this.consonantValues.length == 0;
+                  if (!foundConsonant) {
+                    for (let consonantValue of this.consonantValues) {
+                      if (word.includes(consonantValue)) {
+                        foundConsonant = true;
+                        break;
+                      }
+                    }
+                  }
+
+                  let foundConsonantDigraph = this.consonantDigraphValues.length == 0;
+                  if (!foundConsonantDigraph) {
+                    for (let consonantDigraphValue of this.consonantDigraphValues) {
+                      if (word.includes(consonantDigraphValue)) {
+                        foundConsonantDigraph = true;
+                        break;
+                      }
+                    }
+                  }
+
+                  let foundWeldedSound = this.weldedSoundValues.length == 0;
+                  if (!foundWeldedSound) {
+                    for (let weldedSoundValue of this.weldedSoundValues) {
+                      if (word.includes(weldedSoundValue)) {
+                        foundWeldedSound = true;
+                        break;
+                      }
+                    }
+                  }
+
+                  let foundSuffix = this.suffixValues.length == 0;
+                  if (!foundSuffix) {
+                    for (let suffixValue of this.suffixValues) {
+                      if (word.endsWith(suffixValue.suffix) && ! word.endsWith(suffixValue.exclude)) {
+                        foundSuffix = true;
+                        break;
+                      }
+                    }
+                  }
+
+                  if (foundVowel && foundConsonant && foundConsonantDigraph && foundWeldedSound && foundSuffix) {
+                    filteredWords.push(word);
+                  }
                 }
               }
             }

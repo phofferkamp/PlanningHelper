@@ -1,11 +1,60 @@
-{{stepValues}}
-{{listchoicesValues}}
-
-<ngx-dropdown-treeview [buttonClass]="buttonClass" [items]="stepItems" (selectedChange)="stepValues = $event;filterWords();">
-</ngx-dropdown-treeview>
-
-<ngx-dropdown-treeview [buttonClass]="buttonClass" [items]="listchoicesItems" (selectedChange)="listchoicesValues = $event;filterWords();">
-</ngx-dropdown-treeview>
+<div class="card-padding">
+  <div class="card">
+    <div class="card-body">
+      <div class="row label-height">
+        <div class="col-md-3 col-sm-12 align-bottom">
+          <label class="align-bottom">
+            <strong class="align-bottom">Steps</strong>
+          </label>
+          <ngx-dropdown-treeview buttonClass="btn-outline-primary" [items]="stepItems" [config]="config" (selectedChange)="stepValues = $event;filterWords();">
+          </ngx-dropdown-treeview>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          <label>
+            <strong>List Choices</strong>
+          </label>
+          <ngx-dropdown-treeview buttonClass="btn-outline-primary" [items]="listchoicesItems" [config]="config" (selectedChange)="listchoicesValues = $event;filterWords();">
+          </ngx-dropdown-treeview>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          <label>
+            <strong>Vowels</strong>
+          </label>
+          <ngx-dropdown-treeview buttonClass="btn-outline-primary" [items]="vowelItems" [config]="config" (selectedChange)="vowelValues = $event;filterWords();">
+          </ngx-dropdown-treeview>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          <label>
+            <strong>Consonants</strong>
+          </label>
+          <ngx-dropdown-treeview buttonClass="btn-outline-primary" [items]="consonantItems" [config]="config" (selectedChange)="consonantValues = $event;filterWords();">
+          </ngx-dropdown-treeview>
+        </div>
+        <div class="col-md-6 col-sm-12">
+          <label>
+            <strong>Consonant Digraphs</strong>
+          </label>
+          <ngx-dropdown-treeview buttonClass="btn-outline-primary" [items]="consonantDigraphItems" [config]="config" (selectedChange)="consonantDigraphValues = $event;filterWords();">
+          </ngx-dropdown-treeview>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          <label>
+            <strong>Welded Sounds</strong>
+          </label>
+          <ngx-dropdown-treeview buttonClass="btn-outline-primary" [items]="weldedSoundItems" [config]="config" (selectedChange)="weldedSoundValues = $event;filterWords();">
+          </ngx-dropdown-treeview>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          <label>
+            <strong>Suffixes</strong>
+          </label>
+          <ngx-dropdown-treeview buttonClass="btn-outline-primary" [items]="suffixItems" [config]="config" (selectedChange)="suffixValues = $event;filterWords();">
+          </ngx-dropdown-treeview>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="container">
   <div class="row">
