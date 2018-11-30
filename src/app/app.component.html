@@ -30,7 +30,7 @@
           <ngx-dropdown-treeview buttonClass="btn-outline-primary" [items]="consonantItems" [config]="config" (selectedChange)="consonantValues = $event;filterWords();">
           </ngx-dropdown-treeview>
         </div>
-        <div class="col-md-3 col-sm-12">
+        <div class="col-md-6 col-sm-12">
           <label>
             <strong>Consonant Digraphs</strong>
           </label>
@@ -51,16 +51,39 @@
           <ngx-dropdown-treeview buttonClass="btn-outline-primary" [items]="suffixItems" [config]="config" (selectedChange)="suffixValues = $event;filterWords();">
           </ngx-dropdown-treeview>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row dropdowns">
         <div class="col-md-3 col-sm-12">
           <label>
-            <strong>Slideshow</strong>
+              <strong>Slideshow</strong>
           </label>
-          <div>
-            <button (click)="enableSlideshow()" type="button" class="btn btn-primary btn-block">
-              Enable
-            </button>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="randomizer" [checked]="randomizer" [(ngModel)]="randomizer">
+            <label class="custom-control-label" for="randomizer">Randomizer</label>
           </div>
         </div>
+        <div *ngIf="randomizer" class="col-md-3 col-sm-12">
+          <label for="randomizerWords">
+            <strong>Number of words</strong>
+          </label>
+          <input type="number" class="form-control" id="randomizerWords" name="randomizerWords" min="0" [(ngModel)]="randomizerWords">
+        </div>
+        <div class="col-md-3 col-sm-12"></div>
+        <div *ngIf="!randomizer" class="col-md-3 col-sm-12"></div>
+        <div class="col-md-3 col-sm-12">
+            <label>
+              <strong>Slideshow</strong>
+            </label>
+            <div>
+              <button (click)="enableSlideshow()" type="button" class="btn btn-primary btn-block">
+                Enable
+              </button>
+            </div>
+          </div>
       </div>
     </div>
   </div>
@@ -74,7 +97,7 @@
   </div>
 </div>
 
-<ngu-carousel *ngIf="carouselActive" #myCarousel [inputs]="carouselConfig" [dataSource]="filteredWords">
+<ngu-carousel *ngIf="carouselActive" #myCarousel [inputs]="carouselConfig" [dataSource]="carouselWords">
 	<ngu-tile *nguCarouselDef="let item;">
 		<div class="tile">{{item}}</div>
 	</ngu-tile>
@@ -85,4 +108,4 @@
 	</ul>
 </ngu-carousel>
 
-<div *ngIf="carouselActive" (click)="carouselActive = false" class="close-carousel"><i class="fas fa-times fa-5x" style="color:lightgray"></i></div>
+<div *ngIf="carouselActive" (click)="carouselActive = false" class="close-carousel"><i class="fas fa-times" style="color:lightgray"></i></div>

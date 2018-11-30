@@ -2,12 +2,14 @@
     padding: 1rem;
 }
 
-.dropdowns > div {
-    padding-top: 10px;
+.custom-control {
+    padding-top: 7px;
+    padding-bottom: 10px;
+}
 
-    strong {
-        font-size: .9em;
-    }
+.dropdowns > div {
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 ngu-tile {
@@ -19,8 +21,8 @@ ngu-tile {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 256px;
-  }
+    font-size: 192px;
+}
   
 .leftRs {
         position: absolute;
@@ -53,6 +55,26 @@ ngu-tile {
 .close-carousel {
     position: absolute;
 
-    top: 0;
-    right: 14px;
+    top: 4px;
+    right: 10px;
+
+    i {
+        font-size: 2em;
+    }
+}
+
+
+@media only screen and (min-width: 700px) {
+    .tile {
+        font-size: 256px;
+    }
+
+    .close-carousel {
+        top: 2px;
+        right: 12px;
+    
+        i {
+            font-size: 3em;
+        }
+    }
 }

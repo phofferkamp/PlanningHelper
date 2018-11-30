@@ -9,7 +9,6 @@ import { NguCarousel, NguCarouselConfig } from '@ngu/carousel';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  name = 'Angular';
   slideNo = 0;
   withAnim = true;
   resetAnim = true;
@@ -24,8 +23,12 @@ export class AppComponent {
     // loop: true,
     touch: true,
   }
+  carouselWords = [];
 
   carouselActive = false;
+
+  randomizer = true;
+  randomizerWords = 10;
 
   stepItems: any;
   stepValues = [];
@@ -1430,7 +1433,7 @@ export class AppComponent {
     ]
   }`);
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     let steps = [];
@@ -1628,6 +1631,16 @@ export class AppComponent {
   }
 
   enableSlideshow() {
+    if (this.randomizer) {
+      this.carouselWords = [];
+      while (this.carouselWords.length < this.randomizerWords) {
+        let r = Math.floor(Math.random() * this.filteredWords.length) + 1;
+        if (this.carouselWords.indexOf(this.filteredWords[r]) === -1) this.carouselWords.push(this.filteredWords[r]);
+      }
+    } else {
+      this.carouselWords = this.filteredWords;
+    }
+
     this.carouselActive = true;
     this.cdr.detectChanges();
   }
