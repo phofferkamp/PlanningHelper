@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
 import { TreeviewModule } from 'ngx-treeview';
+import { NguCarouselModule } from '@ngu/carousel';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { TreeviewModule } from 'ngx-treeview';
   ],
   imports: [
     BrowserModule,
-    TreeviewModule.forRoot()
+    TreeviewModule.forRoot(),
+    NguCarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

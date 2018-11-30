@@ -1,10 +1,10 @@
-<div class="card-padding">
+<div *ngIf="!carouselActive" class="card-padding">
   <div class="card">
     <div class="card-body">
-      <div class="row label-height">
-        <div class="col-md-3 col-sm-12 align-bottom">
-          <label class="align-bottom">
-            <strong class="align-bottom">Steps</strong>
+      <div class="row dropdowns">
+        <div class="col-md-3 col-sm-12">
+          <label>
+            <strong>Steps</strong>
           </label>
           <ngx-dropdown-treeview buttonClass="btn-outline-primary" [items]="stepItems" [config]="config" (selectedChange)="stepValues = $event;filterWords();">
           </ngx-dropdown-treeview>
@@ -30,7 +30,7 @@
           <ngx-dropdown-treeview buttonClass="btn-outline-primary" [items]="consonantItems" [config]="config" (selectedChange)="consonantValues = $event;filterWords();">
           </ngx-dropdown-treeview>
         </div>
-        <div class="col-md-6 col-sm-12">
+        <div class="col-md-3 col-sm-12">
           <label>
             <strong>Consonant Digraphs</strong>
           </label>
@@ -51,15 +51,38 @@
           <ngx-dropdown-treeview buttonClass="btn-outline-primary" [items]="suffixItems" [config]="config" (selectedChange)="suffixValues = $event;filterWords();">
           </ngx-dropdown-treeview>
         </div>
+        <div class="col-md-3 col-sm-12">
+          <label>
+            <strong>Slideshow</strong>
+          </label>
+          <div>
+            <button (click)="enableSlideshow()" type="button" class="btn btn-primary btn-block">
+              Enable
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container">
+<div *ngIf="!carouselActive" class="container">
   <div class="row">
     <div *ngFor="let filteredWord of filteredWords" class="col-3">
       {{ filteredWord }}
     </div>
   </div>
 </div>
+
+<ngu-carousel *ngIf="carouselActive" #myCarousel [inputs]="carouselConfig" [dataSource]="filteredWords">
+	<ngu-tile *nguCarouselDef="let item;">
+		<div class="tile">{{item}}</div>
+	</ngu-tile>
+	<button NguCarouselNext class="rightRs">></button>
+	<button NguCarouselPrev class="leftRs"><</button>
+	<ul class="myPoint" NguCarouselPoint>
+		<li *ngFor="let j of myCarousel.pointNumbers; let j = index" [class.active]="j==myCarousel.activePoint" (click)="myCarousel.moveTo(j)"></li>
+	</ul>
+</ngu-carousel>
+
+<div *ngIf="carouselActive" (click)="carouselActive = false" class="close-carousel"><i class="fas fa-times fa-5x" style="color:lightgray"></i></div>

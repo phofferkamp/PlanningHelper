@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 
 import { TreeviewItem, TreeviewConfig } from 'ngx-treeview';
+import { NguCarousel, NguCarouselConfig } from '@ngu/carousel';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,24 @@ import { TreeviewItem, TreeviewConfig } from 'ngx-treeview';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  name = 'Angular';
+  slideNo = 0;
+  withAnim = true;
+  resetAnim = true;
+
+  @ViewChild('myCarousel') myCarousel: NguCarousel<any>;
+  carouselConfig: NguCarouselConfig = {
+    grid: { xs: 1, sm: 1, md: 1, lg: 1, all: 0 },
+    load: 3,
+    point: {
+      visible: false
+    },
+    // loop: true,
+    touch: true,
+  }
+
+  carouselActive = false;
+
   stepItems: any;
   stepValues = [];
   listchoicesItems: any;
@@ -25,7 +44,7 @@ export class AppComponent {
   suffixItems: any;
   suffixValues = [];
 
-  filteredWords: any;
+  filteredWords = [];
 
   config = TreeviewConfig.create({
     // hasCollapseExpand: true
@@ -1411,8 +1430,9 @@ export class AppComponent {
     ]
   }`);
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
   ngOnInit() {
-    let items = [];
     let steps = [];
     let listchoices = [];
 
@@ -1586,7 +1606,7 @@ export class AppComponent {
                   let foundSuffix = this.suffixValues.length == 0;
                   if (!foundSuffix) {
                     for (let suffixValue of this.suffixValues) {
-                      if (word.endsWith(suffixValue.suffix) && ! word.endsWith(suffixValue.exclude)) {
+                      if (word.endsWith(suffixValue.suffix) && !word.endsWith(suffixValue.exclude)) {
                         foundSuffix = true;
                         break;
                       }
@@ -1605,6 +1625,11 @@ export class AppComponent {
 
       this.filteredWords = filteredWords;
     }
+  }
+
+  enableSlideshow() {
+    this.carouselActive = true;
+    this.cdr.detectChanges();
   }
 }
 
