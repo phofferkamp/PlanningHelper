@@ -59,11 +59,21 @@
       <div class="row dropdowns">
         <div class="col-md-3 col-sm-12">
           <label>
-              <strong>Slideshow</strong>
+            <strong>Slideshow</strong>
+          </label>
+          <div>
+            <button (click)="enableSlideshow()" type="button" class="btn btn-primary btn-block">
+              Start
+            </button>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          <label>
+              <strong>Randomizer</strong>
           </label>
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="randomizer" [checked]="randomizer" [(ngModel)]="randomizer">
-            <label class="custom-control-label" for="randomizer">Randomizer</label>
+            <label class="custom-control-label" for="randomizer">Enabled</label>
           </div>
         </div>
         <div *ngIf="randomizer" class="col-md-3 col-sm-12">
@@ -72,18 +82,6 @@
           </label>
           <input type="number" class="form-control" id="randomizerWords" name="randomizerWords" min="0" [(ngModel)]="randomizerWords">
         </div>
-        <div class="col-md-3 col-sm-12"></div>
-        <div *ngIf="!randomizer" class="col-md-3 col-sm-12"></div>
-        <div class="col-md-3 col-sm-12">
-            <label>
-              <strong>Slideshow</strong>
-            </label>
-            <div>
-              <button (click)="enableSlideshow()" type="button" class="btn btn-primary btn-block">
-                Enable
-              </button>
-            </div>
-          </div>
       </div>
     </div>
   </div>
