@@ -9,6 +9,8 @@ import { TreeviewModule } from 'ngx-treeview';
 import { NguCarouselModule } from '@ngu/carousel';
 
 import { ConfigService } from './providers/config-service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 export function initConfig(configService: ConfigService) {
   return () => {
@@ -25,7 +27,8 @@ export function initConfig(configService: ConfigService) {
     HttpModule,
     FormsModule,
     TreeviewModule.forRoot(),
-    NguCarouselModule
+    NguCarouselModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     ConfigService,
