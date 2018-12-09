@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef, HostListener } from '@angular/core';
 
 import { TreeviewItem, TreeviewConfig } from 'ngx-treeview';
 import { NguCarousel, NguCarouselConfig } from '@ngu/carousel';
@@ -14,6 +14,17 @@ export class AppComponent {
   slideNo = 0;
   withAnim = true;
   resetAnim = true;
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    if (event.key === "ArrowRight") {
+      this.myCarousel.moveTo(this.myCarousel.activePoint + 1);
+    }
+
+    if (event.key === "ArrowLeft") {
+      this.myCarousel.moveTo(this.myCarousel.activePoint - 1);
+    }
+  }
 
   @ViewChild('myCarousel') myCarousel: NguCarousel<any>;
   carouselConfig: NguCarouselConfig = {
@@ -265,6 +276,10 @@ export class AppComponent {
 
     this.carouselActive = true;
     this.cdr.detectChanges();
+  }
+
+  carouselClick(item) {
+    window.open(this.configService.getConfig().dictionaryUrl + item);
   }
 }
 

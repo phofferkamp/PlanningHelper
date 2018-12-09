@@ -47,10 +47,6 @@ ngu-tile {
     border-radius: 999px;
     right: 0;
 }
-  
-.myPoint {
-    display: none;
-}
 
 .close-carousel {
     position: absolute;
@@ -62,7 +58,6 @@ ngu-tile {
         font-size: 2em;
     }
 }
-
 
 @media only screen and (min-width: 700px) {
     .tile {

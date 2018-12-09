@@ -97,13 +97,10 @@
 
 <ngu-carousel *ngIf="carouselActive" #myCarousel [inputs]="carouselConfig" [dataSource]="carouselWords">
 	<ngu-tile *nguCarouselDef="let item;">
-		<div class="tile">{{item}}</div>
+		<div class="tile" (click)="carouselClick(item)">{{item}}</div>
 	</ngu-tile>
 	<button NguCarouselNext class="rightRs">></button>
 	<button NguCarouselPrev class="leftRs"><</button>
-	<ul class="myPoint" NguCarouselPoint>
-		<li *ngFor="let j of myCarousel.pointNumbers; let j = index" [class.active]="j==myCarousel.activePoint" (click)="myCarousel.moveTo(j)"></li>
-	</ul>
 </ngu-carousel>
 
 <div *ngIf="carouselActive" (click)="carouselActive = false" class="close-carousel"><i class="fas fa-times" style="color:lightgray"></i></div>
