@@ -11,6 +11,8 @@ import { ConfigService } from './providers/config-service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  appConfig: any;
+
   slideNo = 0;
   withAnim = true;
   resetAnim = true;
@@ -69,10 +71,14 @@ export class AppComponent {
   constructor(private cdr: ChangeDetectorRef, private configService: ConfigService) { }
 
   ngOnInit() {
-    let steps = [];
+    this.configService.loadConfiguration()
+      .subscribe(appConfig => {
+        this.appConfig = appConfig;
+
+        let steps = [];
     let listchoices = [];
 
-    for (let step of this.configService.getConfig().data.steps) {
+    for (let step of this.appConfig.data.steps) {
       let substeps = [];
 
       for (let substep of step.substeps) {
@@ -121,7 +127,7 @@ export class AppComponent {
     this.listchoicesItems = [listchoicesItem];
 
     let vowels = [];
-    for (let vowel of this.configService.getConfig().vowelsList) {
+    for (let vowel of this.appConfig.vowelsList) {
       let item = new TreeviewItem({
         text: vowel, value: vowel, checked: false
       });
@@ -134,7 +140,7 @@ export class AppComponent {
     this.vowelItems = [vowelItem];
 
     let consonants = [];
-    for (let consonant of this.configService.getConfig().consonantsList) {
+    for (let consonant of this.appConfig.consonantsList) {
       let item = new TreeviewItem({
         text: consonant, value: consonant, checked: false
       });
@@ -147,7 +153,7 @@ export class AppComponent {
     this.consonantItems = [consonantItem];
 
     let consonantDigraphs = [];
-    for (let consonantDigraph of this.configService.getConfig().consonantDigraphsList) {
+    for (let consonantDigraph of this.appConfig.consonantDigraphsList) {
       let item = new TreeviewItem({
         text: consonantDigraph, value: consonantDigraph, checked: false
       });
@@ -160,7 +166,7 @@ export class AppComponent {
     this.consonantDigraphItems = [consonantDigraphItem];
 
     let weldedSounds = [];
-    for (let weldedSound of this.configService.getConfig().weldedSoundsList) {
+    for (let weldedSound of this.appConfig.weldedSoundsList) {
       let item = new TreeviewItem({
         text: weldedSound, value: weldedSound, checked: false
       });
@@ -173,7 +179,7 @@ export class AppComponent {
     this.weldedSoundItems = [weldedSoundItem];
 
     let suffixes = [];
-    for (let suffix of this.configService.getConfig().suffixesList) {
+    for (let suffix of this.appConfig.suffixesList) {
       let text = suffix.suffix + (suffix.exclude ? ' (excl -' + suffix.exclude + ')' : '');
       let item = new TreeviewItem({
         text: '-' + text, value: suffix, checked: false
@@ -187,12 +193,14 @@ export class AppComponent {
     this.suffixItems = [suffixItem];
 
     this.filterWords();
+    });
+    
   }
 
   filterWords() {
     let filteredWords = [];
 
-    for (let step of this.configService.getConfig().data.steps) {
+    for (let step of this.appConfig.data.steps) {
       for (let substep of step.substeps) {
         if (this.stepValues.indexOf(substep.substep) > -1) {
           for (let listchoice of substep.listchoices) {
@@ -279,7 +287,7 @@ export class AppComponent {
   }
 
   carouselClick(item) {
-    window.open(this.configService.getConfig().dictionaryUrl + item);
+    window.open(this.appConfig.dictionaryUrl + item);
   }
 }
 

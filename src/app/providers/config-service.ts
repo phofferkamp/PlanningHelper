@@ -1,20 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class ConfigService {
-    private config: any;
+    constructor(private http: HttpClient) { }
 
-    constructor(private http: Http) { }
-
-    loadConfiguration(): Promise<any> {
+    loadConfiguration(): Observable<any> {
         return this.http
-            .get('assets/config.json')
-            .toPromise()
-            .then(res => this.config = res.json());
-    }
-
-    public getConfig() {
-        return this.config;
+            .get('assets/config.json');
     }
 }
