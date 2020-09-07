@@ -13,6 +13,8 @@ import { ConfigService } from './providers/config-service';
 export class AppComponent {
   appConfig: any;
 
+  loading = 0;
+
   slideNo = 0;
   withAnim = true;
   resetAnim = true;
